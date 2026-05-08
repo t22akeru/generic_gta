@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>GTA Browser</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #000; overflow: hidden; }
+    canvas { display: block; width: 100vw; height: 100vh; }
+    #hud {
+      position: fixed; top: 12px; left: 12px;
+      color: #fff; font: bold 14px 'Courier New', monospace;
+      text-shadow: 1px 1px 3px #000; pointer-events: none;
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    #crosshair {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      color: rgba(255,255,255,0.7); font-size: 18px;
+      pointer-events: none; text-shadow: 0 0 3px #000;
+    }
+    #notice {
+      position: fixed; bottom: 80px; left: 50%;
+      transform: translateX(-50%);
+      color: #ff0; font: bold 16px 'Courier New', monospace;
+      text-shadow: 1px 1px 3px #000;
+      opacity: 0; transition: opacity 0.5s;
+      pointer-events: none;
+    }
+    #controls {
+      position: fixed; bottom: 10px; left: 10px;
+      color: rgba(200,200,200,0.7); font: 11px 'Courier New', monospace;
+    }
+    #overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      color: #fff; font: bold 20px 'Courier New', monospace;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 12px; cursor: pointer;
+    }
+    #overlay h1 { font-size: 36px; color: #f50; }
+    #overlay p { color: #ccc; font-size: 14px; }
+    #hpwrap {
+      position: fixed; bottom: 20px; left: 20px;
+      display: flex; align-items: center; gap: 8px;
+      pointer-events: none;
+    }
+    #hplabel { color:#fff; font: bold 13px 'Courier New',monospace; text-shadow:1px 1px 3px #000; }
+    #hpbar {
+      width: 160px; height: 13px;
+      background: #333; border: 1px solid #666; border-radius: 3px; overflow: hidden;
+    }
+    #hpfill { height: 100%; width: 100%; background: #2f2; transition: width 0.25s, background 0.25s; }
+    #gameover {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75);
+      color: #f00; font: bold 52px 'Courier New', monospace;
+      flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+    }
+    #gameover p { font-size: 20px; color: #ccc; }
+    #redflash {
+      position: fixed; inset: 0; background: #f00;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.08s;
+    }
+  </style>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <canvas id="c"></canvas>
+  <div id="hud">
+    <div id="speed">Speed: 0 km/h</div>
+    <div id="wanted">Wanted: ☆☆☆☆☆</div>
+    <div id="ammo">Ammo: 99</div>
+    <div id="time">Time: 06:43</div>
+    <div id="posinfo">Pos: 0, 0</div>
+  </div>
+  <div id="crosshair">＋</div>
+  <div id="notice"></div>
+  <div id="hpwrap">
+    <div id="hplabel">HP</div>
+    <div id="hpbar"><div id="hpfill"></div></div>
+  </div>
+  <div id="controls">
+    WASD: 移動 | Shift: ダッシュ | Space: ジャンプ | E: 車乗降 | 左クリック: 射撃 | マウス: 視点
+  </div>
+  <div id="redflash"></div>
+  <div id="gameover"><span>GAME OVER</span><p>ページを再読み込みしてリスタート</p></div>
+  <div id="overlay">
+    <h1>GTA Browser</h1>
+    <p>クリックしてゲームを開始</p>
+    <p style="font-size:13px">WASD移動 / Shiftダッシュ / Eで車乗降 / 左クリックで射撃 / マウスで視点操作</p>
+  </div>
+  <script type="module" src="js/main.js?v=20260508-5"></script>
+</body>
+</html>
